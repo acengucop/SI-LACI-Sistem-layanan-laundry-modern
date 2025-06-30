@@ -1,0 +1,67 @@
+{% extends 'silaci/base.html' %}
+{% load form_filters %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-blue-100 to-blue-200 px-6 py-12 animate-fadeIn">
+  <div class="w-full max-w-md bg-white/90 backdrop-blur-md rounded-2xl shadow-xl p-10 border border-blue-100">
+
+    <!-- Header -->
+    <div class="mb-8 text-center">
+      <h2 class="text-3xl font-bold text-blue-900">Upload Bukti Pembayaran</h2>
+      <p class="text-sm text-blue-700 mt-2">Silakan unggah bukti transfer Anda di bawah ini.</p>
+    </div>
+
+    <!-- QRIS Display -->
+    {% if qris %}
+    <div class="mb-6 text-center">
+      <p class="text-blue-800 font-medium mb-2">Silakan transfer ke QRIS berikut:</p>
+      <img src="{{ qris.gambar_qris.url }}" alt="QRIS" class="w-60 mx-auto rounded-lg shadow-md border border-blue-200" />
+    </div>
+    {% endif %}
+
+    <!-- Upload Form -->
+    <form method="post" enctype="multipart/form-data" class="space-y-6" onsubmit="showLoading(event)">
+      {% csrf_token %}
+      {% with input_class="w-full px-4 py-3 rounded-lg border border-blue-300 bg-white focus:ring-2 focus:ring-blue-400 focus:outline-none transition duration-300" %}
+        <div>
+          <label for="{{ form.bukti_bayar.id_for_label }}" class="block text-sm font-medium text-blue-800 mb-1">Bukti Transfer</label>
+          {{ form.bukti_bayar|add_class:input_class }}
+          {% if form.bukti_bayar.errors %}
+            <p class="text-red-600 text-xs mt-1">{{ form.bukti_bayar.errors|striptags }}</p>
+          {% endif %}
+        </div>
+      {% endwith %}
+
+      <div>
+        <button type="submit"
+                class="w-full py-3 bg-blue-700 text-white font-semibold rounded-lg shadow hover:bg-blue-800 transition duration-300 ease-in-out transform hover:scale-[1.01] active:scale-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+          <span id="submit-text">Upload</span>
+          <span id="loading-spinner" class="hidden ml-2 animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full"></span>
+        </button>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<!-- Animation Script -->
+<script>
+  function showLoading(event) {
+    const btn = event.target.querySelector('button');
+    const text = btn.querySelector('#submit-text');
+    const spinner = btn.querySelector('#loading-spinner');
+    text.textContent = 'Mengunggah...';
+    spinner.classList.remove('hidden');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.animate-fadeIn').forEach(el => {
+      el.classList.add('opacity-0');
+      setTimeout(() => {
+        el.classList.remove('opacity-0');
+        el.classList.add('transition', 'duration-1000', 'opacity-100');
+      }, 50);
+    });
+  });
+</script>
+{% endblock %}

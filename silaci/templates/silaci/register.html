@@ -1,0 +1,97 @@
+{% extends 'silaci/base.html' %}
+{% load form_filters %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-50 via-blue-100 to-blue-200 px-4 py-12">
+  <div class="w-full max-w-md bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl p-8 md:p-10 border border-blue-100 animate-fadeIn">
+
+    <!-- Title -->
+    <h2 class="text-3xl font-extrabold text-center text-blue-900 mb-6 tracking-wide">
+      Buat Akun Baru
+    </h2>
+    <p class="text-center text-blue-600 text-sm mb-8">
+      Daftar sekarang untuk menikmati layanan laundry premium kami.
+    </p>
+
+    {% comment %} Shared Tailwind input styles {% endcomment %}
+    {% with input_classes="w-full px-4 py-3 rounded-lg border border-blue-300 bg-white focus:ring-2 focus:ring-blue-400 focus:outline-none transition duration-300 ease-in-out shadow-sm hover:shadow-md" %}
+    {% with input_with_icon=input_classes|stringformat:"s pr-12" %}
+
+    <form method="post" class="space-y-5" onsubmit="showLoading(event)">
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="group">
+          <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-blue-800 mb-1">
+            {{ field.label }}
+          </label>
+
+          {% if field.field.widget.input_type == "password" %}
+            <div class="relative">
+              {{ field|add_class:input_with_icon }}
+              <button type="button" onclick="togglePassword('{{ field.id_for_label }}')" class="absolute right-3 top-3 text-blue-500 hover:text-blue-700 focus:outline-none">
+                👁
+              </button>
+            </div>
+          {% else %}
+            {{ field|add_class:input_classes }}
+          {% endif %}
+
+          {% if field.errors %}
+            <p class="text-red-600 text-xs mt-1">{{ field.errors|striptags }}</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+
+      <!-- Submit -->
+      <div>
+        <button type="submit"
+                class="w-full py-3 bg-blue-700 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-800 transition duration-300 ease-in-out transform hover:scale-[1.01] active:scale-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+          <span id="submit-text">Daftar</span>
+          <span id="loading-spinner" class="hidden ml-2 animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full"></span>
+        </button>
+      </div>
+    </form>
+
+    <!-- Login Link -->
+    <p class="mt-6 text-sm text-center text-blue-700">
+      Sudah punya akun?
+      <a href="{% url 'login' %}" class="font-semibold underline hover:text-blue-900 transition duration-200">
+        Login di sini
+      </a>
+    </p>
+
+    {% endwith %}
+    {% endwith %}
+  </div>
+</div>
+
+<!-- JS -->
+<script>
+  function showLoading(event) {
+    const btn = event.target.querySelector('button');
+    const text = btn.querySelector('#submit-text');
+    const spinner = btn.querySelector('#loading-spinner');
+    text.textContent = 'Memproses...';
+    spinner.classList.remove('hidden');
+  }
+
+  function togglePassword(id) {
+    const input = document.getElementById(id);
+    if (input && input.type === 'password') {
+      input.type = 'text';
+    } else if (input) {
+      input.type = 'password';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.animate-fadeIn').forEach(el => {
+      el.classList.add('opacity-0');
+      setTimeout(() => {
+        el.classList.remove('opacity-0');
+        el.classList.add('transition', 'duration-1000', 'opacity-100');
+      }, 50);
+    });
+  });
+</script>
+{% endblock %}

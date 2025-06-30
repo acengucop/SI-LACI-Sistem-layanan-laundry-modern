@@ -1,0 +1,63 @@
+{% extends 'silaci/base.html' %}
+{% load form_filters %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-blue-100 to-blue-200 px-6 py-12 animate-fadeIn">
+  <div class="w-full max-w-6xl bg-white/90 backdrop-blur rounded-2xl shadow-xl p-10 border border-blue-100">
+
+    <!-- Header -->
+    <div class="mb-10 text-center">
+      <h2 class="text-4xl font-bold text-blue-900 tracking-wide">
+        Buat Order Laundry
+      </h2>
+      <p class="mt-2 text-sm text-blue-700">
+        Isi form berikut untuk memesan layanan laundry Anda.
+      </p>
+    </div>
+
+    <!-- Form Container -->
+    <div class="flex justify-center">
+      <form method="post" class="w-full max-w-md space-y-6 bg-white p-8 rounded-xl shadow-md border border-gray-200">
+        {% csrf_token %}
+
+        {% with input_class="w-full px-4 py-3 rounded-lg border border-blue-300 bg-white focus:ring-2 focus:ring-blue-400 focus:outline-none transition duration-200" %}
+
+          <!-- Layanan -->
+          <div>
+            <label for="{{ form.layanan.id_for_label }}" class="block text-sm font-medium text-blue-800 mb-1">
+              Jenis Layanan
+            </label>
+            {{ form.layanan|add_class:input_class }}
+          </div>
+
+          <!-- Berat -->
+          <div>
+            <label for="{{ form.berat_kg.id_for_label }}" class="block text-sm font-medium text-blue-800 mb-1">
+              Berat Cucian (kg)
+            </label>
+            {{ form.berat_kg|add_class:input_class }}
+          </div>
+
+          <!-- Jadwal Jemput -->
+          <div>
+            <label for="{{ form.jadwal_jemput.id_for_label }}" class="block text-sm font-medium text-blue-800 mb-1">
+              Jadwal Jemput
+            </label>
+            {{ form.jadwal_jemput|add_class:input_class }}
+          </div>
+
+        {% endwith %}
+
+        <!-- Submit -->
+        <div>
+          <button type="submit"
+                  class="w-full py-3 bg-blue-700 text-white font-semibold rounded-lg shadow hover:bg-blue-800 transition duration-300">
+            Kirim Order
+          </button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

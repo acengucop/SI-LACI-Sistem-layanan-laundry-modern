@@ -1,0 +1,136 @@
+{% extends 'silaci/base.html' %}
+
+{% block content %}
+
+<header class="bg-white shadow-md">
+  <nav class="container mx-auto flex items-center justify-between px-6 py-4">
+    
+    <!-- Logo -->
+    <a class="text-2xl font-semibold text-indigo-600" href="{% url 'home' %}">
+      SI LACI
+    </a>
+
+    <!-- Navigation -->
+    <div class="space-x-4 flex items-center">
+      {% if user.is_authenticated %}
+        <!-- Dashboard Link -->
+        <a href="{% url 'dashboard' %}" class="text-indigo-600 font-medium hover:underline">
+          Dashboard
+        </a>
+
+        <!-- Logout Button -->
+        <form method="post" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <button type="submit"
+                  class="bg-red-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-red-700 transition">
+            Logout
+          </button>
+        </form>
+      {% else %}
+        <!-- Login & Register Buttons -->
+        <a href="{% url 'login' %}" class="text-indigo-600 font-medium hover:underline">
+          Login
+        </a>
+        <a href="{% url 'register' %}" class="bg-indigo-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-indigo-700 transition">
+          Register
+        </a>
+      {% endif %}
+    </div>
+
+  </nav>
+</header>
+
+
+<main class="container mx-auto px-6 py-16 flex flex-col-reverse md:flex-row items-center md:items-start gap-12 md:gap-24">
+  <section class="max-w-xl text-center md:text-left">
+    <h1 class="text-4xl md:text-5xl font-extrabold text-indigo-700 leading-tight mb-6">
+      Selamat datang di <span class="text-indigo-800">SI LACI</span>
+    </h1>
+    <p class="text-lg text-gray-700 mb-8">
+      Sistem layanan laundry modern untuk memudahkan pemesanan, pelacakan, dan pembayaran cucian Anda secara online.
+    </p>
+    <div class="flex justify-center md:justify-start gap-4">
+      <a class="bg-indigo-600 text-white px-6 py-3 rounded-md font-semibold shadow-md hover:bg-indigo-700 transition" href="{% url 'register' %}">
+        Daftar Sekarang
+      </a>
+      <a class="border border-indigo-600 text-indigo-600 px-6 py-3 rounded-md font-semibold hover:bg-indigo-50 transition" href="{% url 'login' %}">
+        Masuk
+      </a>
+    </div>
+  </section>
+  <section class="max-w-md">
+    <img
+      alt="Ilustrasi layanan laundry online dengan mesin cuci modern dan pelanggan yang senang menggunakan aplikasi di smartphone"
+      class="rounded-lg shadow-lg mx-auto"
+      src="https://storage.googleapis.com/a1aa/image/bc5a6d80-a810-40b2-c299-5dc3b98205cb.jpg"
+      width="600" height="400"
+    />
+  </section>
+</main>
+
+<section class="bg-white py-12">
+  <div class="container mx-auto px-6 max-w-4xl">
+    <h2 class="text-3xl font-semibold text-indigo-700 mb-8 text-center">
+      Fitur Unggulan SI LACI
+    </h2>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+      <div class="p-6 bg-indigo-50 rounded-lg shadow-sm hover:shadow-md transition">
+        <i class="fas fa-mobile-alt text-indigo-600 text-4xl mb-4"></i>
+        <h3 class="text-xl font-semibold mb-2">Pesan Mudah</h3>
+        <p class="text-gray-700">
+          Pesan layanan laundry kapan saja dan di mana saja melalui aplikasi kami yang mudah digunakan.
+        </p>
+      </div>
+      <div class="p-6 bg-indigo-50 rounded-lg shadow-sm hover:shadow-md transition">
+        <i class="fas fa-truck text-indigo-600 text-4xl mb-4"></i>
+        <h3 class="text-xl font-semibold mb-2">Antar Jemput</h3>
+        <p class="text-gray-700">
+          Layanan antar jemput cucian yang praktis dan cepat langsung ke rumah Anda.
+        </p>
+      </div>
+      <div class="p-6 bg-indigo-50 rounded-lg shadow-sm hover:shadow-md transition">
+        <i class="fas fa-credit-card text-indigo-600 text-4xl mb-4"></i>
+        <h3 class="text-xl font-semibold mb-2">Pembayaran Online</h3>
+        <p class="text-gray-700">
+          Bayar layanan laundry dengan mudah dan aman melalui berbagai metode pembayaran online.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-indigo-600 py-12">
+  <div class="container mx-auto px-6 max-w-3xl text-center text-white">
+    <h2 class="text-3xl font-semibold mb-6">
+      Apa Kata Pengguna Kami?
+    </h2>
+    <div class="space-y-8">
+      <blockquote class="bg-indigo-500 bg-opacity-80 rounded-lg p-6 shadow-lg">
+        <p class="text-lg italic">
+          "SI LACI sangat membantu saya mengatur cucian tanpa harus repot keluar rumah. Layanan antar jemputnya sangat cepat dan ramah."
+        </p>
+        <footer class="mt-4 font-semibold">– Rina, Ibu Rumah Tangga</footer>
+      </blockquote>
+      <blockquote class="bg-indigo-500 bg-opacity-80 rounded-lg p-6 shadow-lg">
+        <p class="text-lg italic">
+          "Aplikasi yang mudah digunakan dan pembayaran online yang praktis membuat saya selalu memilih SI LACI untuk kebutuhan laundry saya."
+        </p>
+        <footer class="mt-4 font-semibold">– Budi, Karyawan Kantoran</footer>
+      </blockquote>
+      <blockquote class="bg-indigo-500 bg-opacity-80 rounded-lg p-6 shadow-lg">
+        <p class="text-lg italic">
+          "Fitur pelacakan cucian sangat membantu saya mengetahui status cucian secara real-time. Sangat direkomendasikan!"
+        </p>
+        <footer class="mt-4 font-semibold">– Sari, Mahasiswa</footer>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<footer class="bg-white border-t border-gray-200 py-6 mt-12">
+  <div class="container mx-auto px-6 text-center text-gray-600 text-sm">
+    © 2024 SI LACI. Semua hak cipta dilindungi.
+  </div>
+</footer>
+
+{% endblock %}
