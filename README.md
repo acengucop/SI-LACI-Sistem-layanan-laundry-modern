@@ -2,6 +2,8 @@
 
 Sistem layanan laundry modern berbasis web menggunakan Django. Aplikasi ini memudahkan pelanggan untuk melakukan pemesanan, pelacakan status cucian, serta mengunggah bukti pembayaran melalui QRIS. SI-LACI juga menyediakan dashboard untuk admin dalam mengelola layanan, harga, dan laporan transaksi.
 
+> 💡 Dikembangkan oleh **Kucing Abung-abung Kuasing** sebagai solusi digitalisasi untuk UMKM laundry.
+
 ---
 
 ## 🚀 Fitur Utama
@@ -23,7 +25,7 @@ Sistem layanan laundry modern berbasis web menggunakan Django. Aplikasi ini memu
 - SQLite (default DB untuk dev)
 - Pillow (untuk upload gambar)
 - HTML5 (form kalender `datetime-local`)
-- CSS inline (bisa upgrade ke Bootstrap/Tailwind)
+- CSS inline (bisa diupgrade ke Bootstrap/Tailwind)
 - Git & GitHub
 
 ---
